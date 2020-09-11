@@ -55,25 +55,24 @@ def passages(pers: String) = {
   val urns = passageRefs(pers)
   val s = if (urns.size == 1) { "" } else  { "s" }
   val hdr = s"<h2>ID ${pers}</h2>" +
-  "<p>Found " + urns.size + " passage${s} for " + pers + "</p>"
+  "<p>Found " + urns.size + s" passage${s} for " + pers + "</p>"
 
   val results = for ( (urn, idx)  <- urns.zipWithIndex) yield {
     val scholion = urn.collapsePassageBy(1)
-    //println(scholion)
     val nd = corpus.nodes.filter(nd => scholion > nd.urn)
-    //println(nd)
+    val text = nd.map(n => s"<p>${n.text}</p>" )
     val pgOpt = dsev.tbsForText(scholion)
 
     pgOpt match  {
       case None => {
         "NO page in DSE, I am sad"
+        s"<li> <strong>${idx + 1}/${urns.size}</strong> ${scholion} (Sadly, no page indexed in DSE record)" + text.mkString("\n")
       }
       case _ => {
         val pg = pgOpt.get.objectComponent
         val url = pageBaseUrl + pg + "/"
-
         val link = "<a href=\"" + url + "\">facsimile</a>"
-        val text = nd.map(n => s"<p>${n.text}</p>" )
+
         s"<li> <strong>${idx + 1}/${urns.size}</strong> ${scholion}, page ${pg} (${link})" + text.mkString("\n")
       }
     }

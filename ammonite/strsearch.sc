@@ -13,16 +13,20 @@ import $ivy.`edu.holycross.shot::scm:7.4.0`
 import $ivy.`edu.holycross.shot::ohco2:10.20.4`
 import $ivy.`edu.holycross.shot.cite::xcite:4.3.0`
 import $ivy.`edu.holycross.shot::dse:7.1.3`
+import $ivy.`edu.holycross.shot::greek:9.0.0`
+
 
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.scm._
 import edu.holycross.shot.cite._
 import edu.holycross.shot.dse._
-
+import edu.holycross.shot.greek._
+/*
 val xmlUrl = s"https://raw.githubusercontent.com/homermultitext/hmt-archive/master/releases-cex/hmt-${releaseId}-scholia-xml.cex"
 val scholiaXml = CorpusSource.fromUrl(xmlUrl, cexHeader=false)
 
 import scala.xml._
+
 
 val pnIndex = for (n <- scholiaXml.nodes) yield {
   val x = XML.loadString(n.text)
@@ -33,8 +37,8 @@ val pnIndex = for (n <- scholiaXml.nodes) yield {
   })
 }
 val personMap = pnIndex.flatten.groupBy(_._2)
+*/
 
-import edu.holycross.shot.scm._
 val url = s"https://raw.githubusercontent.com/homermultitext/hmt-archive/master/releases-cex/hmt-${releaseId}.cex"
 val lib = CiteLibrarySource.fromUrl(url)
 val corpus = lib.textRepository.get.corpus
